@@ -33,7 +33,7 @@ export default function SplashScreen() {
     // إخفاء بعد 5 ثوانٍ كحد أقصى
     const timeout = setTimeout(() => {
       setIsVisible(false);
-    }, 5000);
+    }, 7000);
 
     return () => {
       clearInterval(progressTimer);
