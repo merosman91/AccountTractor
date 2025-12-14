@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { FaTractor, FaChartBar, FaDatabase } from 'react-icons/fa';
+import { FaTractor, FaChartBar, FaDatabase, FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,66 +24,97 @@ export default function Header() {
   ];
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
+    <header className={`sticky top-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-200' 
-        : 'bg-white border-b-2 border-primary-600'
+        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' 
+        : 'bg-gradient-to-r from-white to-gray-50 border-b border-gray-200'
     }`}>
       <div className="container mx-auto px-4 py-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center justify-between">
+          {/* الشعار */}
           <div className="flex items-center gap-4">
             <div className="relative">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg">
-                <FaTractor className="text-white text-3xl" />
-              </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs font-bold">🚜</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg group hover:shadow-xl transition-all duration-300">
+                <div className="text-white text-3xl group-hover:scale-110 transition-transform">
+                  🚜
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-full flex items-center justify-center shadow-md">
+                  <span className="text-white text-xs font-bold">$</span>
+                </div>
               </div>
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
-                محاسب التراكتور الزراعي
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                محاسب التراكتور
               </h1>
-              <p className="text-gray-600 text-sm md:text-base mt-1">
-                نظام محاسبة متكامل لسائق التراكتور - يدعم العمل دون إنترنت
+              <p className="text-gray-600 text-sm md:text-base mt-1 hidden md:block">
+                نظام محاسبة متكامل - يعمل دون إنترنت
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2">
+          {/* قائمة الهاتف */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden text-gray-700 hover:text-primary-600 transition"
+          >
+            {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+
+          {/* الأزرار الرئيسية */}
+          <div className="hidden md:flex gap-3">
             <button 
               onClick={() => window.location.hash = '#reports'}
-              className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-xl text-sm md:text-base font-semibold transition-all duration-300 transform hover:scale-105 shadow-md"
+              className="btn-gradient flex items-center gap-2 px-5 py-3"
             >
               <FaChartBar />
-              <span className="hidden md:inline">التقارير</span>
+              <span>التقارير</span>
             </button>
             <button 
               onClick={() => window.location.hash = '#backup'}
-              className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded-xl text-sm md:text-base font-semibold transition-all duration-300 transform hover:scale-105 shadow-md"
+              className="btn-outline flex items-center gap-2 px-5 py-3"
             >
               <FaDatabase />
-              <span className="hidden md:inline">النسخ الاحتياطي</span>
+              <span>النسخ الاحتياطي</span>
             </button>
           </div>
         </div>
 
+        {/* قائمة الهاتف المنبثقة */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden mt-4 animate-slide-down">
+            <div className="bg-white rounded-2xl shadow-lg p-4 space-y-2">
+              {tabs.map((tab) => (
+                <a
+                  key={tab.id}
+                  href={`#${tab.id}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition"
+                >
+                  <tab.icon className="text-primary-600" />
+                  <span className="font-medium">{tab.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* تبويبات التنقل */}
-        <div className="mt-6 overflow-x-auto">
-          <div className="flex gap-1 min-w-max">
+        <nav className="hidden md:block mt-6">
+          <div className="flex gap-1 bg-gray-100 p-1 rounded-xl">
             {tabs.map((tab) => (
               <a
                 key={tab.id}
                 href={`#${tab.id}`}
-                className="flex items-center gap-2 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100 transition-all duration-200 font-medium text-sm md:text-base whitespace-nowrap"
+                className="tab-modern flex items-center gap-2 flex-1 justify-center"
               >
-                <tab.icon />
+                <tab.icon className="text-lg" />
                 {tab.label}
               </a>
             ))}
           </div>
-        </div>
+        </nav>
       </div>
     </header>
   );
-}
+      }
