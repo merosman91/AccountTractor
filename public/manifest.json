@@ -1,11 +1,11 @@
 {
-  "name": "رفيق المزارع - محاسب التراكتور",
-  "short_name": "محاسب التراكتور",
-  "description": "نظام محاسبة متكامل لسائق التراكتور الزراعي",
+  "name": "محاسب التراكتور",
+  "short_name": "المحاسب",
+  "description": "نظام محاسبة زراعي متكامل",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#2E7D32",
+  "background_color": "#ffffff",
+  "theme_color": "#2e7d32",
   "orientation": "portrait",
   "scope": "/",
   "lang": "ar",
@@ -18,10 +18,26 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/icon512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance", "agriculture"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "إضافة عمل جديد",
+      "short_name": "عمل جديد",
+      "description": "إضافة يوم عمل جديد",
+      "url": "/#work"
+    },
+    {
+      "name": "عرض التقارير",
+      "short_name": "التقارير",
+      "description": "عرض التقارير والإحصائيات",
+      "url": "/#reports"
     }
   ]
 }
